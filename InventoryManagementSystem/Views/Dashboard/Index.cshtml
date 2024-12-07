@@ -1,0 +1,124 @@
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "_Layout";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Dashboard</h1>
+
+    <!-- KPI Section -->
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card text-white bg-primary shadow mb-3">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fa fa-chart-bar me-2"></i>Total Sales</h5>
+                    <p id="totalSales" class="card-text display-6"></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-danger shadow mb-3">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fa fa-exclamation-triangle me-2"></i>Low Stock Items</h5>
+                    <p id="lowStockItems" class="card-text display-6"></p>
+                    <ul id="lowStockList" class="list-unstyled mt-3"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart Section -->
+    <div class="row">
+        <!-- Sales Trends -->
+        <div class="col-md-6">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="card-title mb-0"><i class="fa fa-chart-line me-2"></i>Sales Trends</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="salesTrendsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inventory Distribution -->
+        <div class="col-md-6">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="card-title mb-0"><i class="fa fa-pie-chart me-2"></i>Current Stock Distribution</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="inventoryDistributionChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Fetch and render data for charts and KPIs
+    fetch('/Dashboard/GetSalesTrends')
+        .then(response => response.json())
+        .then(data => {
+            const ctx = document.getElementById('salesTrendsChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        label: 'Sales Trends',
+                        data: data.values,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                }
+            });
+        });
+
+    fetch('/Dashboard/GetInventoryDistribution')
+        .then(response => response.json())
+        .then(data => {
+            const ctx = document.getElementById('inventoryDistributionChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: data.labels,
+                    datasets: [{
+                        data: data.values,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(75, 192, 192, 0.6)',
+                            'rgba(153, 102, 255, 0.6)'
+                        ]
+                    }]
+                }
+            });
+        });
+
+    fetch('/Dashboard/GetDashboardKPIs')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            document.getElementById('totalSales').innerText = data.totalSales;
+            document.getElementById('lowStockItems').innerText = data.lowStockItems.length;
+            const lowStockList = document.getElementById('lowStockList');
+            lowStockList.innerHTML = ""; // Clear existing
+            data.lowStockItems.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${item.productName} (Stock: ${item.stockLevel})`;
+                lowStockList.appendChild(listItem);
+            });
+        })
+        .catch(error => {
+            document.getElementById('totalSales').innerText = "Error";
+            document.getElementById('lowStockItems').innerText = "Error";
+        });
+</script>

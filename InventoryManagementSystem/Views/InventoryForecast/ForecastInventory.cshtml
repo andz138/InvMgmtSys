@@ -1,0 +1,45 @@
+@model InventoryManagementSystem.Models.Product
+
+@{
+    ViewBag.Title = "Inventory Forecast";
+    Layout = "_Layout";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            Inventory Forecast for @Model.ProductName
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Predicted Sales Next Period</h5>
+            <p class="card-text">
+                Based on our predictive model, we anticipate selling approximately 
+                <strong>@Math.Round((double)ViewBag.PredictedQuantity)</strong> units of "@Model.ProductName" in the upcoming period.
+            </p>
+            <p class="card-text">
+                What does this mean for you as the business owner?
+            </p>
+            <ul class="list-group list-group-flush mb-3">
+                <li class="list-group-item">
+                    <strong>Restock Adequately:</strong> Consider replenishing your stock to ensure you have at least this many units available. 
+                    Keeping your inventory aligned with forecasted demand helps you avoid lost sales or customer disappointment.
+                </li>
+                <li class="list-group-item">
+                    <strong>Plan Promotions Strategically:</strong> If the forecasted sales are below your expectations, 
+                    consider running promotions or discounts to boost demand. Alternatively, if sales are high, you might raise prices slightly or bundle with other products.
+                </li>
+                <li class="list-group-item">
+                    <strong>Maintain Supplier Relationships:</strong> Forecasted demand helps you schedule timely orders from suppliers. 
+                    Contact them early if you need more stock, ensuring smooth supply without last-minute scramble.
+                </li>
+            </ul>
+
+            <p class="card-text">
+                Use this data to make informed decisions about procurement, pricing, and marketing strategies. A well-managed inventory ensures 
+                not only steady sales but also keeps storage costs and overstock risks low.
+            </p>
+
+            <a asp-controller="Products" asp-action="Index" class="btn btn-secondary">Back to Product List</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,187 @@
+/* General styles for better aesthetics */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+.navbar {
+  transition: background-color 0.3s ease-in-out;
+}
+
+.navbar-brand {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.navbar-nav .nav-link {
+  color: #f8f9fa !important;
+  transition: color 0.3s;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #ffc107 !important;
+}
+
+/* Navbar scrolled state */
+.navbar-scrolled {
+  background-color: #212529 !important;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: #f8f9fa !important;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+  color: #ffc107 !important;
+}
+
+/* Footer styles */
+footer {
+  background-color: #343a40;
+  color: #fff;
+}
+
+footer a {
+  color: #ffc107;
+}
+
+footer a:hover {
+  color: #fff;
+}
+
+/* Button styles */
+.btn-outline-light {
+  border-color: #ffc107;
+  color: #ffc107;
+}
+
+.btn-outline-light:hover {
+  background-color: #ffc107;
+  color: #343a40;
+  border-color: #ffc107;
+}
+
+.btn-custom {
+  position: relative;
+  overflow: hidden;
+  transition: color 0.3s;
+}
+
+.btn-custom::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 300%;
+  height: 300%;
+  background: rgba(255, 255, 255, 0.15);
+  transition: all 0.5s;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+}
+
+.btn-custom:hover::after {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.btn-custom:hover {
+  color: #343a40;
+}
+
+/* Scroll-to-Top Button */
+#scrollTopBtn {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  display: none;
+  z-index: 99;
+  border-radius: 50%;
+  padding: 10px 15px;
+}
+
+#scrollTopBtn:hover {
+  background-color: #ffc107;
+  color: #343a40;
+}
+
+/* Responsive spacing */
+.container {
+  max-width: 1200px;
+}
+
+@media (max-width: 768px) {
+  .navbar-brand {
+    font-size: 1.2rem;
+  }
+
+  main {
+    padding: 1rem;
+  }
+
+  footer {
+    font-size: 0.9rem;
+  }
+}
+
+/* Main content */
+main {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Card hover effect */
+.card-img-top {
+  transition: transform 0.3s;
+}
+
+.card-img-top:hover {
+  transform: scale(1.05);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Section animations using AOS */
+[data-aos] {
+  opacity: 0;
+  transition-property: opacity, transform;
+}
+
+[data-aos].aos-animate {
+  opacity: 1;
+  transform: translate(0);
+}
+
+/* Example section styles */
+section {
+  padding: 60px 0;
+}
+
+/* Lightbox customizations */
+.lb-data .lb-caption {
+  color: #fff;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.lb-nav a.lb-prev, .lb-nav a.lb-next {
+  color: #fff;
+  font-size: 2rem;
+}
+
+/* Styling for feature icons */
+.fa-box, .fa-truck, .fa-chart-line {
+  transition: transform 0.3s ease;
+}
+
+.fa-box:hover, .fa-truck:hover, .fa-chart-line:hover {
+  transform: scale(1.2);
+}
